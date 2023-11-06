@@ -1,0 +1,12 @@
+.sign_up_main {
+  margin-top: 3%;
+  margin-left: 17.5%;
+  margin-right: 17.5%;
+  border: 2px solid;
+  padding-bottom: 53px;
+  box-shadow: 9px 8px #b7b7b7;
+}
+.sign_up_main h1 {
+  text-align: center;
+  margin-bottom: 53px;
+}
