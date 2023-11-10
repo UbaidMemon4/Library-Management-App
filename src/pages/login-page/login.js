@@ -9,8 +9,8 @@ const Login = () => {
     const signUpUser = JSON.parse(localStorage.getItem("signup"));
     if (signUpUser) {
       if (
-        signUpUser.email == values.email &&
-        signUpUser.password == values.password
+        signUpUser.email === values.email &&
+        signUpUser.password === values.password
       ) {
         dispatch(loginUser(signUpUser));
       } else {
@@ -47,12 +47,15 @@ return(
     <Form.Item
       label="Email"
       name="email"
+      
       rules={[
         {
           required: true,
           message: "Please input your Email!",
+          type:"email"
         },
       ]}
+      
     >
       <Input />
     </Form.Item>
@@ -64,6 +67,7 @@ return(
         {
           required: true,
           message: "Please input your password!",
+          
         },
       ]}
     >
