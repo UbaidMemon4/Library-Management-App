@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-    const id =JSON.parse(localStorage.getItem("login"));
+    const user =JSON.parse(localStorage.getItem("login"));
 
 export const libraySlice = createSlice({
   name: "library",
   initialState: {
-    user: id,
+    user: user,
     books: [],
     shelves: [],
     author: [],
@@ -17,8 +17,11 @@ export const libraySlice = createSlice({
     logout: (state) => {
       state.user = null;
     },
+    addBook:(state,action)=>{
+
+    }
   },
 });
 
-export const { loginUser, logout } = libraySlice.actions;
+export const { loginUser, logout,addBook } = libraySlice.actions;
 export default libraySlice.reducer;
