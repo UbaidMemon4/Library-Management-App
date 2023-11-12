@@ -1,0 +1,15 @@
+.main-div {
+  margin: 40px 50px 40px 50px;
+}
+.head-butons {
+  display: flex;
+  justify-content: space-between;
+}
+.modal-main {
+  margin: 35px 2px 35px 2px;
+  text-align: center;
+  font-size: 23px;
+}
+.modal-head {
+  border: 2px solid #b7b7b7;
+}

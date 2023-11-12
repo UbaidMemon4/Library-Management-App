@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/librarySlice";
 const Header = () => {
   const user = useSelector((s) => s.user);
-  const dispatch = useDispatch;
+  const dispatch = useDispatch();
 
   return (
     <div className="main_div">

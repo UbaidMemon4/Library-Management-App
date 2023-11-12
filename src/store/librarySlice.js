@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+    const id =JSON.parse(localStorage.getItem("login"));
 
 export const libraySlice = createSlice({
   name: "library",
   initialState: {
-    user: null,
+    user: id,
     books: [],
     shelves: [],
     author: [],
@@ -11,6 +12,7 @@ export const libraySlice = createSlice({
   reducers: {
     loginUser: (state, action) => {
       state.user = action.payload;
+      localStorage.setItem("login", JSON.stringify(action.payload));
     },
     logout: (state) => {
       state.user = null;

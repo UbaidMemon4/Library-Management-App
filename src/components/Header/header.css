@@ -1,6 +1,7 @@
 .head {
   display: flex;
   justify-content: space-between;
+  border-bottom: 2px solid #b7b7b7;
 }
 .buttons {
   display: flex;

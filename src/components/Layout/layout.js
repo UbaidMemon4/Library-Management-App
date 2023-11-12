@@ -5,9 +5,9 @@ import { useSelector } from "react-redux";
 const Layout = () => {
   const user = useSelector((s) => s.user);
   return (
-    <div className="main_div">
+    <div>
       <Header />
-      <div className="main-wrap">
+      <div>
         {user ? <NavLinkHeader /> : null}
         <Outlet />
       </div>
