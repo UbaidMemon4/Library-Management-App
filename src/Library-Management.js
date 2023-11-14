@@ -1,6 +1,6 @@
 import { ConfigProvider } from "antd";
 import React from "react";
-import Signup from "./pages/sign-up-page/Signup.js";
+import Signup from "./pages/sign-up-page/Signup";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./pages/error-page/error";
 import Layout from "./components/Layout/layout";

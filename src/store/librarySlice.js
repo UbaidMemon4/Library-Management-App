@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-    const user =JSON.parse(localStorage.getItem("login"));
-
+const user = JSON.parse(localStorage.getItem("login"));
+const books = JSON.parse(localStorage.getItem("books"));
 export const libraySlice = createSlice({
   name: "library",
   initialState: {
     user: user,
-    books: [],
+    books: books || [],
     shelves: [],
     author: [],
   },
@@ -17,11 +17,16 @@ export const libraySlice = createSlice({
     logout: (state) => {
       state.user = null;
     },
-    addBook:(state,action)=>{
-
-    }
+    addBook: (state, action) => {
+      const bookDet = {
+        ...action.payload,
+        id: Math.random(),
+      };
+      state.books.push(bookDet);
+      localStorage.setItem("books", JSON.stringify(state.books));
+    },
   },
 });
 
-export const { loginUser, logout,addBook } = libraySlice.actions;
+export const { loginUser, logout, addBook } = libraySlice.actions;
 export default libraySlice.reducer;
