@@ -1,7 +1,5 @@
-.main-div {
-  margin: 40px 50px 40px 50px;
-}
 .head-butons {
+  margin: 40px 50px 40px 50px;
   display: flex;
   justify-content: space-between;
 }
@@ -12,4 +10,21 @@
 }
 .modal-head {
   border: 2px solid #b7b7b7;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.form-button{
+  display: flex;
+  gap: 5px;
+}
+.author-container{
+  border: 1px solid;
+  border-radius: 60px;
+  margin: 10px 100px 0px 100px;
+  padding-bottom: 22px
+}
+.author-button{
+  cursor: pointer;
+  margin-left: 20px;
+  margin-right: 20px;
 }

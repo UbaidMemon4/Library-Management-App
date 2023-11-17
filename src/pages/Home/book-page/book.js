@@ -7,56 +7,26 @@ import { addBook } from "../../../store/librarySlice";
 const Books = () => {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const array = useSelector((array) => array);
-
+  const onFinish = (values) => {
+    console.log("Success:", values);
+    setIsModalOpen(false);
+    dispatch(addBook(values));
+    // console.log(values);
+  };
+  const onFinishFailed = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
   const showModal = () => {
     setIsModalOpen(true);
   };
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  const onFinish = (values) => {
-    console.log("Success:", values);
-    setIsModalOpen(false);
-    dispatch(addBook(values));
-    // console.log(values);
-//     {
-// //       values.map((details) => {
-// //         // console.log(details.bookname,"kkkkkkkkk");
-// //         return (
-// //           <div>
-// //             {console.log("ik")}
-// //             {/* <h3>{details.bookname}</h3> */}
-// //             //{" "}
-// //             {/* <p>{details.shelve}</p>
-// // //       <p>{details.author}</p> */}
-// //             //{" "}
-// //             {/* 
-// // //       <button
-// // //       // onClick={() => {
-// // //       // handleOnEdit(s);
-// // //       // }}
-// // //       >
-// // //         Edit
-// // //       </button>
-// // //       <button
-// // //       //  onClick={() => handleOnClick(s)}
-// // //       >
-// // //         Delete
-// //       </button> */}
-// //             //{" "}
-// //           </div>
-// //         );
-// //       });
-//     }
-  };
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
+  const bookList = useSelector((s) => s.books);
   return (
     <div className="modal-main">
       <div className="head-butons">
-        <Button type="primary">book(0)</Button>
+        <Button type="primary">book({bookList.lenght})</Button>
         <>
           <Button type="primary" onClick={showModal}>
             Add Book
@@ -144,6 +114,20 @@ const Books = () => {
             </Form>
           </Modal>
         </>
+      </div>
+      <div>
+        {bookList.map((t) => {
+          return (
+            <div className="book-container">
+              <h3>{"Book Name : " + t.bookname}</h3>
+              <p>{"Shelve Name : " + t.shelve}</p>
+              <p>{"Author Name : " + t.author}</p>
+
+              <button className="book-button">Edit</button>
+              <button className="book-button">Delete</button>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
