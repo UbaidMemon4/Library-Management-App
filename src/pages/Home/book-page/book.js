@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import { Button, Modal, Form, Input, Space, Checkbox } from "antd";
+import { Button, Modal, Form, Input, Space, Checkbox, Card } from "antd";
 import "./book.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addBook } from "../../../store/librarySlice";
 
 const Books = () => {
+  const [form] = Form.useForm();
+  const [bookId, setBookId] = useState("");
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const onFinish = (values) => {
     console.log("Success:", values);
-    setIsModalOpen(false);
+
     dispatch(addBook(values));
-    // console.log(values);
+    setIsModalOpen(false);
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -23,10 +25,20 @@ const Books = () => {
     setIsModalOpen(false);
   };
   const bookList = useSelector((s) => s.books);
+  const onEdit = (t) => {
+    setIsModalOpen(true);
+    setBookId(t.id);
+    form.setFieldsValue({
+      bookname: t.bookname,
+      shelve: t.shelve,
+      author: t.author,
+    });
+  };
+
   return (
     <div className="modal-main">
       <div className="head-butons">
-        <Button type="primary">book({bookList.lenght})</Button>
+        <Button type="primary">book({bookList.length})</Button>
         <>
           <Button type="primary" onClick={showModal}>
             Add Book
@@ -42,8 +54,9 @@ const Books = () => {
             <div className="modal-head">
               <h1>Add Book</h1>
             </div>
-
+            
             <Form
+            form={form}
               name="basic"
               labelCol={{
                 span: 8,
@@ -106,7 +119,7 @@ const Books = () => {
                   <Button type="primary" onClick={handleCancel}>
                     Cancel
                   </Button>
-                  <Button type="primary" htmlType="submit" onClick={onFinish}>
+                  <Button type="primary" htmlType="submit">
                     Submit
                   </Button>
                 </div>
@@ -118,13 +131,38 @@ const Books = () => {
       <div>
         {bookList.map((t) => {
           return (
-            <div className="book-container">
-              <h3>{"Book Name : " + t.bookname}</h3>
-              <p>{"Shelve Name : " + t.shelve}</p>
-              <p>{"Author Name : " + t.author}</p>
-
-              <button className="book-button">Edit</button>
-              <button className="book-button">Delete</button>
+            <div key={t.id} className="book-container">
+              <Card
+                title="Books"
+                bordered={false}
+                className="boder"
+                style={{
+                  width: 1150,
+                }}
+              >
+                <p>
+                  <b>Book Name : </b>
+                  {t.bookname}
+                </p>
+                <p>
+                  <b>Shelve Name : </b>
+                  {t.shelve}
+                </p>
+                <p>
+                  <b>Author Name : </b>
+                  {t.author}
+                </p>
+                <Button
+                  className="book-button"
+                  type="primary"
+                  onClick={() => onEdit(t)}
+                >
+                  Edit
+                </Button>
+                <Button className="book-button" type="primary">
+                  Delete
+                </Button>
+              </Card>
             </div>
           );
         })}

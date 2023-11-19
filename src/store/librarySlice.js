@@ -24,8 +24,10 @@ export const libraySlice = createSlice({
         ...action.payload,
         id: Math.random(),
       };
+
       state.books.push(bookDet);
-      // localStorage.setItem("books", JSON.stringify(state.books));
+
+      localStorage.setItem("books", JSON.stringify(state.books));
     },
     addShelve: (state, action) => {
       const shelve = {
@@ -33,7 +35,7 @@ export const libraySlice = createSlice({
         id: Math.random(),
       };
       state.shelves.push(shelve);
-      // localStorage.setItem("shelves", JSON.stringify(state.shelves));
+      localStorage.setItem("shelves", JSON.stringify(state.shelves));
     },
     addAuthor: (state, action) => {
       const author = {
@@ -41,7 +43,7 @@ export const libraySlice = createSlice({
         id: Math.random(),
       };
       state.author.push(author);
-      // localStorage.setItem("author", JSON.stringify(state.author));
+      localStorage.setItem("author", JSON.stringify(state.author));
     },
   },
 });

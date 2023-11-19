@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal, Form, Input, Space, Checkbox } from "antd";
+import { Button, Modal, Form, Input, Space, Checkbox, Card } from "antd";
 import "./author.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addAuthor } from "../../store/librarySlice";
@@ -26,7 +26,7 @@ const Author = () => {
   return (
     <div className="modal-main">
       <div className="head-butons">
-        <Button type="primary">author({authorList.lenght})</Button>
+        <Button type="primary">author({authorList.length})</Button>
         <>
           <Button type="primary" onClick={showModal}>
             Add Author
@@ -95,7 +95,7 @@ const Author = () => {
                   <Button type="primary" onClick={handleCancel}>
                     Cancel
                   </Button>
-                  <Button type="primary" htmlType="submit" onClick={onFinish}>
+                  <Button type="primary" htmlType="submit">
                     Submit
                   </Button>
                 </div>
@@ -107,12 +107,21 @@ const Author = () => {
       <div>
         {authorList.map((t) => {
           return (
-            <div className="author-container">
-              <p>{"Author Name : " + t.author}</p>
-              <h3>{"Qualification : " + t.qualification}</h3>
+            <div className="book-container">
+            <Card
+              title="Books"
+              bordered={false}
+              className="boder"
+              style={{
+                width: 1150,
+              }}
+            >
+              <p><b>Author Name :  </b>{ t.author}</p>
+              <p><b>Qualification : </b> { t.qualification}</p>
 
-              <button className="author-button">Edit</button>
-              <button className="author-button">Delete</button>
+              <Button className="author-button" type="primary">Edit</Button>
+              <Button className="author-button" type="primary">Delete</Button>
+              </Card>
             </div>
           );
         })}

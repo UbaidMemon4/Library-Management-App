@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal, Form, Input, Space, Checkbox } from "antd";
+import { Button, Modal, Form, Input, Space, Checkbox, Card } from "antd";
 import "./shelves.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addShelve } from "../../store/librarySlice";
@@ -26,7 +26,7 @@ const Shelves = () => {
   return (
     <div className="modal-main">
       <div className="head-butons">
-        <Button type="primary">shelve({shelveList.lenght})</Button>
+        <Button type="primary">shelve({shelveList.length})</Button>
         <>
           <Button type="primary" onClick={showModal}>
             Add Shelves
@@ -82,7 +82,7 @@ const Shelves = () => {
                   <Button type="primary" onClick={handleCancel}>
                     Cancel
                   </Button>
-                  <Button type="primary" htmlType="submit" onClick={onFinish}>
+                  <Button type="primary" htmlType="submit">
                     Submit
                   </Button>
                 </div>
@@ -94,11 +94,27 @@ const Shelves = () => {
       <div>
         {shelveList.map((t) => {
           return (
-            <div className="shelve-container">
-              <p>{"Shelve Name : " + t.shelve}</p>
+            <div className="book-container">
+              <Card
+                title="Books"
+                bordered={false}
+                className="boder"
+                style={{
+                  width: 1150,
+                }}
+              >
+                <p>
+                  <b>Shelve Name : </b>
+                  {t.shelve}
+                </p>
 
-              <button className="shelve-button">Edit</button>
-              <button className="shelve-button">Delete</button>
+                <Button className="shelve-button" type="primary">
+                  Edit
+                </Button>
+                <Button className="shelve-button" type="primary">
+                  Delete
+                </Button>
+              </Card>
             </div>
           );
         })}
