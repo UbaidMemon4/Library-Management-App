@@ -1,18 +1,35 @@
 import React, { useState } from "react";
-import { Button, Modal, Form, Input, Space, Checkbox, Card } from "antd";
-import "./shelves.css";
+import { Button, Modal, Form, Input, Card } from "antd";
+import "./index.css";
 import { useDispatch, useSelector } from "react-redux";
-import { addShelve } from "../../store/librarySlice";
+import {
+  addShelve,
+  deleteshelve,
+  updateShelve,
+} from "../../store/librarySlice";
 
 const Shelves = () => {
+  const [form] = Form.useForm();
+  const [shelveId, setShelveId] = useState("");
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const onFinish = (values) => {
-    console.log("Success:", values);
+    if (shelveId) {
+      const update = {
+        ...values,
+        id: shelveId,
+      };
+      dispatch(updateShelve(update));
+    } else {
+      dispatch(addShelve(values));
+    }
     setIsModalOpen(false);
-    dispatch(addShelve(values));
-    // console.log(values);
+    form.resetFields();
   };
+  const onClickDelete = (id) => {
+    dispatch(deleteshelve(id));
+  };
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
@@ -20,7 +37,18 @@ const Shelves = () => {
     setIsModalOpen(true);
   };
   const handleCancel = () => {
+    form.resetFields();
+
     setIsModalOpen(false);
+  };
+
+  const onEdit = (t) => {
+    console.log(t.id);
+    setShelveId(t.id);
+    setIsModalOpen(true);
+    form.setFieldsValue({
+      shelve: t.shelve,
+    });
   };
   const shelveList = useSelector((s) => s.shelves);
   return (
@@ -44,6 +72,7 @@ const Shelves = () => {
             </div>
 
             <Form
+              form={form}
               name="basic"
               labelCol={{
                 span: 8,
@@ -72,21 +101,14 @@ const Shelves = () => {
               >
                 <Input />
               </Form.Item>
-              <Form.Item
-                wrapperCol={{
-                  offset: 8,
-                  span: 16,
-                }}
-              >
-                <div className="form-button">
-                  <Button type="primary" onClick={handleCancel}>
-                    Cancel
-                  </Button>
-                  <Button type="primary" htmlType="submit">
-                    Submit
-                  </Button>
-                </div>
-              </Form.Item>
+              <div className="form-button">
+                <Button type="primary" onClick={handleCancel}>
+                  Cancel
+                </Button>
+                <Button type="primary" htmlType="submit">
+                  Submit
+                </Button>
+              </div>
             </Form>
           </Modal>
         </>
@@ -96,7 +118,7 @@ const Shelves = () => {
           return (
             <div className="book-container">
               <Card
-                title="Books"
+                title="Shelves"
                 bordered={false}
                 className="boder"
                 style={{
@@ -108,10 +130,18 @@ const Shelves = () => {
                   {t.shelve}
                 </p>
 
-                <Button className="shelve-button" type="primary">
+                <Button
+                  className="shelve-button"
+                  type="primary"
+                  onClick={() => onEdit(t)}
+                >
                   Edit
                 </Button>
-                <Button className="shelve-button" type="primary">
+                <Button
+                  className="shelve-button"
+                  type="primary"
+                  onClick={() => onClickDelete(t.id)}
+                >
                   Delete
                 </Button>
               </Card>

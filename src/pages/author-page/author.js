@@ -1,17 +1,33 @@
 import React, { useState } from "react";
-import { Button, Modal, Form, Input, Space, Checkbox, Card } from "antd";
-import "./author.css";
+import { Button, Modal, Form, Input, Card } from "antd";
+import "./index.css";
 import { useDispatch, useSelector } from "react-redux";
-import { addAuthor } from "../../store/librarySlice";
+import {
+  addAuthor,
+  deleteAuthor,
+  updateAuthor,
+} from "../../store/librarySlice";
 
 const Author = () => {
+  const [form] = Form.useForm();
+  const [authorId, setAuthorId] = useState("");
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const onFinish = (values) => {
-    console.log("Success:", values);
+    if (authorId) {
+      const update = {
+        ...values,
+        id: authorId,
+      };
+      dispatch(updateAuthor(update));
+    } else {
+      dispatch(addAuthor(values));
+    }
     setIsModalOpen(false);
-    dispatch(addAuthor(values));
-    // console.log(values);
+    form.resetFields();
+  };
+  const onClickDelete = (id) => {
+    dispatch(deleteAuthor(id));
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
@@ -23,6 +39,16 @@ const Author = () => {
     setIsModalOpen(false);
   };
   const authorList = useSelector((s) => s.author);
+  const onEdit = (t) => {
+    console.log(t.id);
+    setAuthorId(t.id);
+    setIsModalOpen(true);
+    form.setFieldsValue({
+      author: t.author,
+      qualification: t.qualification,
+    });
+  };
+
   return (
     <div className="modal-main">
       <div className="head-butons">
@@ -44,6 +70,7 @@ const Author = () => {
             </div>
 
             <Form
+              form={form}
               name="basic"
               labelCol={{
                 span: 8,
@@ -73,33 +100,27 @@ const Author = () => {
                 <Input />
               </Form.Item>
 
-                    <Form.Item
-                      label="Qualification"
-                      name="qualification"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please input your qualification!",
-                        },
-                      ]}
-                    >
-                      <Input />
-                    </Form.Item>
               <Form.Item
-                wrapperCol={{
-                  offset: 8,
-                  span: 16,
-                }}
+                label="Qualification"
+                name="qualification"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input your qualification!",
+                  },
+                ]}
               >
-                <div className="form-button">
-                  <Button type="primary" onClick={handleCancel}>
-                    Cancel
-                  </Button>
-                  <Button type="primary" htmlType="submit">
-                    Submit
-                  </Button>
-                </div>
+                <Input />
               </Form.Item>
+
+              <div className="form-button">
+                <Button type="primary" onClick={handleCancel}>
+                  Cancel
+                </Button>
+                <Button type="primary" htmlType="submit">
+                  Submit
+                </Button>
+              </div>
             </Form>
           </Modal>
         </>
@@ -108,19 +129,36 @@ const Author = () => {
         {authorList.map((t) => {
           return (
             <div className="book-container">
-            <Card
-              title="Books"
-              bordered={false}
-              className="boder"
-              style={{
-                width: 1150,
-              }}
-            >
-              <p><b>Author Name :  </b>{ t.author}</p>
-              <p><b>Qualification : </b> { t.qualification}</p>
+              <Card
+                title="Author"
+                bordered={false}
+                className="boder"
+                style={{
+                  width: 1150,
+                }}
+              >
+                <p>
+                  <b>Author Name : </b>
+                  {t.author}
+                </p>
+                <p>
+                  <b>Qualification : </b> {t.qualification}
+                </p>
 
-              <Button className="author-button" type="primary">Edit</Button>
-              <Button className="author-button" type="primary">Delete</Button>
+                <Button
+                  className="author-button"
+                  type="primary"
+                  onClick={() => onEdit(t)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  className="author-button"
+                  type="primary"
+                  onClick={() => onClickDelete(t.id)}
+                >
+                  Delete
+                </Button>
               </Card>
             </div>
           );

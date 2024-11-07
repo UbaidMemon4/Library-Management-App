@@ -1,0 +1,34 @@
+.head-butons {
+  margin: 40px 50px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+.modal-main {
+  display: flex;
+  flex-direction: column;
+  font-size: 23px;
+  align-items: center;
+}
+.modal-head {
+  border: 2px solid #b7b7b7;
+  margin-bottom: 10px;
+}
+.form-button {
+  display: flex;
+  gap: 5px;
+}
+.author-container {
+  padding-bottom: 22px;
+  width: 95%;
+}
+.author-button {
+  margin-right: 4px;
+  cursor: pointer;
+}
+.boder {
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

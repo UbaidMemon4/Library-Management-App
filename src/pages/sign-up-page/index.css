@@ -1,9 +1,12 @@
+.sign_up_container {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
 .sign_up_main {
-  margin-top: 3%;
-  margin-left: 17.5%;
-  margin-right: 17.5%;
+  width: 95%;
   border: 2px solid;
-  padding-bottom: 53px;
+  padding-bottom: 109px;
   box-shadow: 9px 8px #b7b7b7;
 }
 .sign_up_main h1 {
